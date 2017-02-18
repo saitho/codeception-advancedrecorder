@@ -59,8 +59,7 @@ class AdvancedRecorder extends \Codeception\Extension
 	protected $seed;
 	protected $recordedTests = [];
 	
-	public function beforeSuite()
-	{
+	public function beforeSuite() {
 		$this->webDriverModule = null;
 		if (!$this->hasModule($this->config['module'])) {
 			$this->writeln("Recorder is disabled, no available modules");
@@ -79,7 +78,7 @@ class AdvancedRecorder extends \Codeception\Extension
 			codecept_output_dir()
 		));
 		$this->recordDir = codecept_output_dir() . 'record_'.date('Y-m-d_Hi').'_'.$this->seed;
-		$this->writeln("Directory Format: <debug>record_{$this->seed}/{testname}</debug> ----");
+		$this->writeln("Directory Format: <debug>".substr($this->recordDir, strlen(codecept_output_dir()))."/{testname}</debug> ----");
 	}
 	public function afterSuite() {
 		if (!$this->webDriverModule or !$this->dir) {
@@ -130,7 +129,7 @@ class AdvancedRecorder extends \Codeception\Extension
 			->produce();
 		
 		file_put_contents(codecept_output_dir().'records.html', $indexHTML);
-		file_put_contents($this->recordDir.'/records.html', $indexHTML);
+		file_put_contents($this->recordDir. '/records.html', $indexHTML);
 		$this->writeln("⏺ Records saved into: <info>file://" . codecept_output_dir().'records.html</info>');
 	}
 	public function before(TestEvent $e)
@@ -160,12 +159,10 @@ class AdvancedRecorder extends \Codeception\Extension
 		}
 		
 		// deleting successfully executed tests
-		$testName = preg_replace('~\W~', '.', Descriptor::getTestAsString($e->getTest()));
-		FileSystem::deleteDir($this->recordDir.'/'.$testName);
+		FileSystem::deleteDir($this->dir);
 	}
 	
-	public function persist(TestEvent $e, $status='')
-	{
+	public function persist(TestEvent $e, $status='') {
 		if (!$this->webDriverModule or !$this->dir) {
 			return;
 		}
@@ -213,8 +210,7 @@ class AdvancedRecorder extends \Codeception\Extension
 		);
 	}
 	
-	public function afterStep(StepEvent $e)
-	{
+	public function afterStep(StepEvent $e) {
 		if (!$this->webDriverModule or !$this->dir) {
 			return;
 		}
@@ -222,7 +218,7 @@ class AdvancedRecorder extends \Codeception\Extension
 			return;
 		}
 		
-		$filename = str_pad($this->stepNum, 3, "0", STR_PAD_LEFT) . '.png';
+		$filename = str_pad($this->stepNum, 3, '0', STR_PAD_LEFT) . '.png';
 		$this->webDriverModule->_saveScreenshot($this->dir . DIRECTORY_SEPARATOR . $filename);
 		$this->stepNum++;
 		$this->slides[$filename] = $e->getStep();
