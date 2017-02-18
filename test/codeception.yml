@@ -1,0 +1,19 @@
+actor: Tester
+paths:
+    tests: tests
+    data: tests/_data
+    support: tests/_support
+    log: tests/_output
+    envs: tests/_envs
+extensions:
+    enabled:
+      - Codeception\Extension\Phantoman
+      - Codeception\Extension\RunFailed
+      - Codeception\Extension\AdvancedRecorder
+    config:
+      Codeception\Extension\Phantoman:
+        path: 'bin/phantomjs.exe'
+        host: 127.0.0.1
+        port: 4445
+      Codeception\Extension\AdvancedRecorder:
+        delete_successful: false

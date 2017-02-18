@@ -1,0 +1,10 @@
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver
+        - Asserts
+    config:
+        WebDriver:
+            url: http://google.de
+            browser: phantomjs
+            port: 4445
