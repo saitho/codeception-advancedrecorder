@@ -85,6 +85,7 @@ class AdvancedRecorder extends \Codeception\Extension
 			return;
 		}
 		$links = '';
+		$i = 0;
 		foreach ($this->recordedTests as $linkText => $testData) {
 			$seconds = (int)($milliseconds = (int)($testData['time'] * 1000)) / 1000;
 			$time = ($seconds % 60) . (($milliseconds === 0) ? '' : '.' . $milliseconds);
@@ -92,6 +93,7 @@ class AdvancedRecorder extends \Codeception\Extension
 			if ($this->config['delete_successful'] && $testData['wasSuccessful']) {
 				continue;
 			}
+			$i++;
 			
 			if(!empty($testData['wasSuccessful'])) {
 				$status = 'successful';
@@ -113,6 +115,7 @@ class AdvancedRecorder extends \Codeception\Extension
 				}
 			}
 			$links .= (new Template(file_get_contents($this->tableElementTemplate)))
+				->place('number', $i)
 				->place('status', $status)
 				->place('url', $testData['url'])
 				->place('trClass', $trClass)
