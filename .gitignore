@@ -1,2 +1,3 @@
 /vendor/
 /.idea/
+/test/tests/_output/
