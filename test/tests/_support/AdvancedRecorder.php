@@ -54,6 +54,7 @@ class AdvancedRecorder extends \Codeception\Extension
 	protected $webDriverModule;
 	protected $dir;
 	protected $recordDir;
+	protected $suiteTime;
 	protected $slides = [];
 	protected $stepNum = 0;
 	protected $seed;
@@ -77,7 +78,8 @@ class AdvancedRecorder extends \Codeception\Extension
 			"⏺ <bold>Recording</bold> ⏺ step-by-step screenshots will be saved to <info>%s</info>",
 			codecept_output_dir()
 		));
-		$this->recordDir = codecept_output_dir() . 'record_'.date('Y-m-d_Hi').'_'.$this->seed;
+		
+		$this->suiteTime = time();
 		$this->writeln("Directory Format: <debug>".substr($this->recordDir, strlen(codecept_output_dir()))."/{testname}</debug> ----");
 	}
 	public function afterSuite() {
@@ -142,10 +144,17 @@ class AdvancedRecorder extends \Codeception\Extension
 		$this->slides = [];
 		$testName = preg_replace('~\W~', '.', Descriptor::getTestAsString($e->getTest()));
 		
-		if(!is_dir($this->recordDir)) {
-			@mkdir($this->recordDir);
+		$recorderDir = codecept_output_dir() . 'AdvancedRecorder';
+		if(!is_dir($recorderDir)) {
+			mkdir($recorderDir);
 		}
-		$this->dir = $this->recordDir.'/'.$testName;
+		
+		$this->recordDir = $recorderDir.DIRECTORY_SEPARATOR.'record_'.date('Y-m-d_Hi', $this->suiteTime).'_'.$this->seed;
+		if(!is_dir($this->recordDir)) {
+			mkdir($this->recordDir);
+		}
+		
+		$this->dir = $this->recordDir.DIRECTORY_SEPARATOR.$testName;
 		@mkdir($this->dir);
 	}
 	public function cleanup(TestEvent $e)
