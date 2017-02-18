@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recorder Results Index</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/fh-3.1.2/r-2.1.1/datatables.min.css"/>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Recorded Tests
+        </a>
+    </div>
+</nav>
+<div class="container">
+    <h1>Record #{{seed}}</h1>
+    <table class="table table-bordered" id="recorder-results">
+        <thead>
+        <tr>
+            <th>Status</th>
+            <th>Test</th>
+            <th>Runtime</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{records}}
+        </thead>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/fh-3.1.2/r-2.1.1/datatables.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#recorder-results').DataTable({
+            "bPaginate": false
+        });
+    });
+</script>
+</body>
+</html>
