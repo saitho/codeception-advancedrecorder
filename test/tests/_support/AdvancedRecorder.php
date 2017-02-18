@@ -78,6 +78,7 @@ class AdvancedRecorder extends \Codeception\Extension
 			"⏺ <bold>Recording</bold> ⏺ step-by-step screenshots will be saved to <info>%s</info>",
 			codecept_output_dir()
 		));
+		$this->recordDir = codecept_output_dir() . 'record_'.date('Y-m-d_Hi').'_'.$this->seed;
 		$this->writeln("Directory Format: <debug>record_{$this->seed}/{testname}</debug> ----");
 	}
 	public function afterSuite() {
@@ -142,7 +143,6 @@ class AdvancedRecorder extends \Codeception\Extension
 		$this->slides = [];
 		$testName = preg_replace('~\W~', '.', Descriptor::getTestAsString($e->getTest()));
 		
-		$this->recordDir = codecept_output_dir() . 'record_'.$this->seed;
 		if(!is_dir($this->recordDir)) {
 			@mkdir($this->recordDir);
 		}
